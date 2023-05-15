@@ -1,6 +1,7 @@
 package com.company.client;
 
 import com.company.server.db.database;
+import com.company.server.enums.Category;
 import com.company.server.models.Ad;
 import com.company.server.models.Comment;
 import com.company.server.models.User;
@@ -98,10 +99,12 @@ public class Application implements MyScanner{
             System.out.println("""
                     1. Show all ads
                     2. Show my ads
-                    3. Logout
+                    3. Add ad
+                    
+                    0. Logout
                     """);
             String s = scannerSTR.nextLine();
-            if (s.equals("3")) {
+            if (s.equals("0")) {
                 menu();
                 break;
             }
@@ -112,9 +115,40 @@ public class Application implements MyScanner{
                 case "2" -> {
                     myAds(user);
                 }
+                case "3" ->{
+                    adAdd(user);
+                }
                 default -> throw new InputMismatchException();
             }
             scannerSTR.nextLine();
+        }
+    }
+
+    private static void adAdd(User user) {
+        if (user == null) {
+            return;
+        }
+        System.out.print("Input title of your ad - ");
+        String adText = scannerSTR.nextLine();
+
+        System.out.println("Select category of your ad");
+        for (int i = 0; i < Category.values().length; i++) {
+            System.out.println(i+". "+Category.values()[i]);
+        }
+        int select = scannerNUM.nextInt();
+        UUID category_id = Category.values()[select].category_id();
+
+        Ad ad = new Ad(adText, category_id, user.getId());
+
+        AdService adService = new AdService();
+        Boolean added = adService.addAd(user, ad);
+        if (added == null) {
+            return;
+        }
+        if (added) {
+            System.out.println("Success");
+        }else {
+            System.out.println("Error");
         }
     }
 
