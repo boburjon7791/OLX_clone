@@ -6,6 +6,7 @@ import com.company.server.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class AdService {
     public List<Ad> showMyAds(User user) {
@@ -46,5 +47,25 @@ public class AdService {
         ad.setUser_id(user.getId());
         database.setAds(ad);
         return true;
+    }
+
+    /**
+     * This method like or unlike for Ads
+     * if return null user not found
+     * else if return true this user liked to this ad
+     * else if return false this user unliked to this ad
+    * */
+    public Boolean likeUnlikeAd(User user,Ad ad){
+        if (user == null ||
+                ad == null) {
+            return null;
+        }
+        boolean likedUsers = ad.setLikedUsers(user.getId());
+        if (likedUsers) {
+            ad.setCout_of_like();
+        }else {
+            ad.removeCout_of_like();
+        }
+        return likedUsers;
     }
 }

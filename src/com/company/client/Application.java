@@ -53,7 +53,7 @@ public class Application implements MyScanner{
         System.out.print("Input first name - ");
         String firstName = scannerSTR.nextLine();
 
-        System.out.print("Input phone number - ");
+        System.out.print("Input phone number - +");
         String phoneNumber = scannerSTR.nextLine();
 
         System.out.print("Input password - ");
@@ -175,7 +175,7 @@ public class Application implements MyScanner{
             System.out.println("Error");
             return;
         }
-        if (setComment){
+        if (setComment) {
             System.out.println("Qo'shildi");
             return;
         }
@@ -208,13 +208,6 @@ public class Application implements MyScanner{
                 System.out.println("Select comment");
             }
         }
-        /*if (select == 1) {
-            commentAdd(user,ad);
-        } else if (select == 2) {
-            System.out.println("Select comment");
-        } else if (select == 0) {
-            landingPage(user);
-        }*/
     }
 
     private static void showAds(User user) {
@@ -231,7 +224,6 @@ public class Application implements MyScanner{
         User showUser = service.showUser(user_id);
         System.out.println(showUser.getFirstName());
         System.out.println(ad.getText());
-
         if (extracted(user)) return;
 
         List<Comment> comments = service.showAdComments(ad);

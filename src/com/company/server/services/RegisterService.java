@@ -24,7 +24,8 @@ public class RegisterService {
         }
         AtomicBoolean exist = new AtomicBoolean(false);
         database.getUsers().forEach(user1 -> {
-            if (user1.getPhoneNumber().equals(user.getPhoneNumber())) {
+            if (!user1.equals(user) ||
+            user1.hashCode() == user.hashCode()) {
                 exist.set(true);
             }
         });
