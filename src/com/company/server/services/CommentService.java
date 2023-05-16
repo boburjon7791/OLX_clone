@@ -23,13 +23,25 @@ public class CommentService {
         });
     }
 
-    public void likeComment(User user, Comment comment) {
-        if (user == null || comment == null) {
-            return;
-        }
-        comment.setCout_of_comment_like();
-    }
 
+
+    /**
+    *This method for like or unlike to comment
+     * if this method return true user liked this comment
+     * else if this method return false user unliked this comment
+    * */
+    public synchronized Boolean likeUnlikeComment(User user, Comment comment) {
+        if (user == null || comment == null) {
+            return null;
+        }
+        boolean likedUsers = comment.setLikedUsers(user.getId());
+        if (likedUsers) {
+            comment.setCout_of_comment_like();
+        }else {
+            comment.removeCout_of_comment_like();
+        }
+        return likedUsers;
+    }
     public List<Comment> myAdComments(UUID user_id, UUID ad_id) {
         if (user_id == null || ad_id == null) {
             return null;

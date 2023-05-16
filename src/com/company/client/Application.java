@@ -10,11 +10,12 @@ import com.company.server.services.*;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Application implements MyScanner{
     public static void main(String[] args) {
         menu();
-        }
+    }
     private static void menu() {
         while (true) {
             try {
@@ -276,29 +277,42 @@ public class Application implements MyScanner{
 
     private static void commentReplyLike(User user, Ad ad, Comment comments) {
         System.out.println(comments.getComment_text());
-        System.out.println("""
-                1. Reply
-                2. Like
-                
-                0. Back to Home page
-                """);
+        AtomicBoolean unlike = new AtomicBoolean(false);
+        System.out.println("1. Reply");
+        comments.getLikedUsers().forEach(user_id -> {
+            if (user_id.equals(user.getId())) {
+                unlike.set(true);
+            }
+        });
+        if (unlike.get()) {
+            System.out.println("2. Unlike");
+        }else if(!unlike.get()) {
+            System.out.println("2. Like");
+        }
+        System.out.println("\n0. Home page");
         int select = scannerNUM.nextInt();
         if (select!=1 && select!=2) {
             landingPage(user);
-            return;
-        }
-        switch (select) {
-            case 1 -> {
-                System.out.print("Input comment - ");
-                String comment = scannerSTR.nextLine();
-                CommentService service1 = new CommentService();
-                service1.setComment(user, ad, comment,comments.getId());
+        }else {
+            switch (select) {
+                case 1 -> {
+                    System.out.print("Input comment - ");
+                    String comment = scannerSTR.nextLine();
+                    CommentService service1 = new CommentService();
+                    service1.setComment(user, ad, comment, comments.getId());
                     System.out.println("Qo'shildi");
-            }
-            case 2 ->{
-                CommentService service1 = new CommentService();
-                service1.likeComment(user,comments);
-                    System.out.println("Liked");
+                }
+                case 2 -> {
+                    CommentService service1 = new CommentService();
+                    Boolean likeUnlikeComment = service1.likeUnlikeComment(user, comments);
+                    if (likeUnlikeComment == null) {
+                        System.out.println("Object error");
+                    } else if (likeUnlikeComment) {
+                        System.out.println("Liked");
+                    }else {
+                        System.out.println("Unliked");
+                    }
+                }
             }
         }
     }

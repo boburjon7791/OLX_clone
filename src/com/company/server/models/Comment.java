@@ -1,8 +1,6 @@
 package com.company.server.models;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class Comment {
     private final UUID id = UUID.randomUUID();
@@ -10,10 +8,22 @@ public class Comment {
     private UUID elon_id = UUID.randomUUID();
     private Integer cout_of_comment_like = 0;
     private final List<Comment> responses = new ArrayList<>();
+    private final Set<UUID> likedUsers = new HashSet<>();
 
     public Comment(String comment_text, UUID elon_id) {
         this.comment_text = comment_text;
         this.elon_id = elon_id;
+    }
+
+    public Set<UUID> getLikedUsers() {
+        return likedUsers;
+    }
+
+    public boolean setLikedUsers(UUID user_id) {
+        return this.likedUsers.add(user_id);
+    }
+    public void removeLikedUsers(UUID user_id) {
+        this.likedUsers.remove(user_id);
     }
 
     public UUID getId() {
@@ -45,6 +55,10 @@ public class Comment {
 
     public Integer getCout_of_comment_like() {
         return cout_of_comment_like;
+    }
+
+    public void removeCout_of_comment_like() {
+        this.cout_of_comment_like--;
     }
 
     public void setCout_of_comment_like() {

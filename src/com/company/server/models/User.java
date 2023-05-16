@@ -1,5 +1,7 @@
 package com.company.server.models;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class User {
@@ -7,6 +9,7 @@ public class User {
     private String firstName;
     private String phoneNumber;
     private String password;
+    private final List<UUID> likedAds = new ArrayList<>();
 
     public User() {}
 
@@ -15,7 +18,6 @@ public class User {
         this.phoneNumber = "+" + phoneNumber;
         this.password = password;
     }
-
     public UUID getId() {
         return id;
     }
@@ -39,6 +41,7 @@ public class User {
     public String getPassword() {
         return password;
     }
+
 
     public void setPassword(String password) {
         this.password = password;
