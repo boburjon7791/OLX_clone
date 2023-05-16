@@ -10,9 +10,9 @@ import java.util.List;
 
 public abstract class database {
     private database(){}
-    private static List<User> users = new ArrayList<>();
-    private static List<Ad> ads = new ArrayList<>();
-    private static List<Comment> comments = new ArrayList<>();
+    private static final List<User> users = new ArrayList<>();
+    private static final List<Ad> ads = new ArrayList<>();
+    private static final List<Comment> comments = new ArrayList<>();
     static {
         User boburjon = new User("Boburjon", "998999057761", "1234");
         users.add(boburjon);

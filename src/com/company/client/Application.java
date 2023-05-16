@@ -20,7 +20,9 @@ public class Application implements MyScanner{
         while (true) {
             try {
                 database.getUsers().forEach(user -> {
-                    System.out.println(user.getFirstName() + ", " + user.getPhoneNumber() + ", " + user.getPassword());
+                    System.out.println(user.getFirstName() + ", "
+                            + user.getPhoneNumber() + ", " +
+                            user.getPassword());
                 });
                 System.out.println("""
                         1. Login
