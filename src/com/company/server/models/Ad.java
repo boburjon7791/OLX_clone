@@ -47,8 +47,8 @@ public class Ad {
         return cout_of_like;
     }
 
-    public void setCout_of_like(Integer cout_of_like) {
-        this.cout_of_like = cout_of_like;
+    public void setCout_of_like() {
+        this.cout_of_like ++;
     }
 
     @Override

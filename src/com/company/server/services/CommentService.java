@@ -27,7 +27,7 @@ public class CommentService {
         if (user == null || comment == null) {
             return;
         }
-        comment.setCout_of_comment_like(1);
+        comment.setCout_of_comment_like();
     }
 
     public List<Comment> myAdComments(UUID user_id, UUID ad_id) {

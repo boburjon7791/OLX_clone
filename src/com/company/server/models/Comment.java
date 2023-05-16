@@ -47,8 +47,8 @@ public class Comment {
         return cout_of_comment_like;
     }
 
-    public void setCout_of_comment_like(Integer cout_of_comment_like) {
-        this.cout_of_comment_like += cout_of_comment_like;
+    public void setCout_of_comment_like() {
+        this.cout_of_comment_like ++;
     }
 
     @Override
